@@ -1,0 +1,3 @@
+(function (vjs) {
+
+})(videojs);

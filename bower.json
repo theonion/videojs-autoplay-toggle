@@ -1,0 +1,26 @@
+{
+    "name": "videojs-autoplay-toggle",
+    "version": "0.0.1",
+    "homepage": "https://github.com/theonion/videojs-autoplay-toggle",
+    "authors": [
+        "Andrew Kos <akos@theonion.com>"
+    ],
+    "description": "A plugin for Video.js that adds an autoplay toggle which will persist to cookies or localstorage.",
+    "main": "videojs.autoplay-toggle.js",
+    "keywords": [
+        "video",
+        "videojs",
+        "volume"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "videojs": "~4.7.1"
+    }
+}
