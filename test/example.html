@@ -10,7 +10,7 @@
     <script src="https://getfirebug.com/releases/lite/1.4/firebug-lite.js"></script>
   <!--<![endif]-->
 
-  <script src="../bower_components/videojs/dist/video-js/video.js"></script>
+  <script src="../bower_components/videojs/dist/video-js/video.dev.js"></script>
   <script src="../videojs.autoplay-toggle.js"></script>
 
   <style>
@@ -22,6 +22,9 @@
       line-height: 1.5em;
       font-family: Verdana, sans-serif;
     }
+    .example-video-container {
+      display: inline-block;
+    }
   </style>
 
 </head>
@@ -30,22 +33,80 @@
     Autoplay toggle selection will be persisted in local storage or cookies.
   </p>
 
-  <video id="vid1" class="video-js vjs-default-skin" autoplay controls preload="auto"
-      poster="http://video-js.zencoder.com/oceans-clip.png"
-      width="640"
-      height="360"
-      data-setup='{}'>
-    <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
-    <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
-    <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
-    <p>Video Playback Not Supported</p>
-  </video>
+  <div class="example-video-container">
+    <p class="description">
+      Video 1 : Not attached to plugin, will always autoplay.
+    </p>
+
+    <video id="vid1" class="video-js vjs-default-skin" autoplay controls preload="auto"
+        poster="http://video-js.zencoder.com/oceans-clip.png"
+        width="640"
+        height="360"
+        data-setup='{}'>
+      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
+      <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
+      <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
+      <p>Video Playback Not Supported</p>
+    </video>
+  </div>
+
+  <div class="example-video-container">
+    <p class="description">
+      Video 2 : Not attached to plugin, will never autoplay.
+    </p>
+
+    <video id="vid2" class="video-js vjs-default-skin" controls preload="auto"
+        poster="http://video-js.zencoder.com/oceans-clip.png"
+        width="640"
+        height="360"
+        data-setup='{}'>
+      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
+      <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
+      <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
+      <p>Video Playback Not Supported</p>
+    </video>
+  </div>
+
+  <div class="example-video-container">
+    <p class="description">
+      Video 3 :  This autoplay is dependent on this plugin.
+    </p>
+    <video id="vid3" class="video-js vjs-default-skin" autoplay controls preload="auto"
+        poster="http://video-js.zencoder.com/oceans-clip.png"
+        width="640"
+        height="360"
+        data-setup='{}'>
+      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
+      <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
+      <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
+      <p>Video Playback Not Supported</p>
+    </video>
+  </div>
+
+  <div class="example-video-container">
+    <p class="description">
+      Video 4 : This autoplay is dependent on this plugin.
+    </p>
+    <video id="vid4" class="video-js vjs-default-skin" autoplay controls preload="auto"
+        poster="http://video-js.zencoder.com/oceans-clip.png"
+        width="640"
+        height="360"
+        data-setup='{}'>
+      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
+      <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
+      <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
+      <p>Video Playback Not Supported</p>
+    </video>
+  </div>
 
   <script>
     (function() {
-      var vid1 = videojs('vid1');
-
-      vid1.autoplayToggle({
+      videojs('vid1').muted(true);
+      videojs('vid2').muted(true);
+      videojs('vid3').muted(true).autoplayToggle({
+        namespace: 'this-is-my-custom-autoplay-namespace'
+      });
+      videojs('vid4').muted(true).autoplayToggle({
         namespace: 'this-is-my-custom-autoplay-namespace'
       });
     })();

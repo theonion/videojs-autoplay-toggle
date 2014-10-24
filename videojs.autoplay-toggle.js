@@ -38,7 +38,19 @@
           + (sPath ? "; path=" + sPath : "")
           + (bSecure ? "; secure" : "");
       return true;
-    }
+    },
+    removeItem: function(sKey, sPath, sDomain) {
+      if (!this.hasItem(sKey)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(sKey) + "=;" + " expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+      return true;
+    },
+    hasItem: function (sKey) {
+      if (!sKey) { return false; }
+      return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(
+        /[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+    },
   },
 
   /**
@@ -59,6 +71,9 @@
     },
     setItem: function(key, value) {
       return window.localStorage.setItem(key, value);
+    },
+    removeItem: function(key) {
+      return window.localStorage.removeItem(key);
     }
   },
 
@@ -69,9 +84,12 @@
     getItem: function (key) {
       return localStorage.available() ? localStorage.getItem(key) : cookies.getItem(key);
     },
-    setItem: function(key, value) {
+    setItem: function (key, value) {
       localStorage.available() ? localStorage.setItem(key, value) : cookies.setItem(key, value, Infinity, '/');
       return value;
+    },
+    removeItem: function (key) {
+      localStorage.available() ? localStorage.removeItem(key) : cookies.removeItem(key);
     }
   },
 
@@ -121,41 +139,56 @@
       '</div>';
     player.controlBar.el().appendChild(autoplayBtn);
 
-    // retrieve autoplay from storage and highlight the correct toggle option
+    // retrieve autoplay from storage and highlight the correct toggle option in *all* video players
     var autoplayToggle = function (activate) {
-      var toggleOn = autoplayBtn.querySelectorAll('.autoplay-on')[0],
-          toggleOff = autoplayBtn.querySelectorAll('.autoplay-off')[0];
 
-      if (activate) {
-        // toggle this on
-        toggleOn.className = 'autoplay-toggle autoplay-toggle-active autoplay-on';
-        toggleOff.className = 'autoplay-toggle autoplay-off';
-        storage.setItem(key, true);
-      } else {
-        // toggle this off
-        toggleOn.className = 'autoplay-toggle autoplay-on';
-        toggleOff.className = 'autoplay-toggle autoplay-toggle-active autoplay-off';
-        storage.setItem(key, false);
+      // set cookie once
+      activate ? storage.removeItem(key) : storage.setItem(key, 'no');
+
+      // get all videos and toggle all their autoplays
+      var videos = document.querySelectorAll('.video-js');
+      for (var i = 0; i < videos.length; i++) {
+
+        // check that this video has a toggle button
+        var toggleBtnSelector  = videos[i].querySelectorAll('.vjs-autoplay-toggle-button');
+        if (toggleBtnSelector.length > 0) {
+          var toggleBtn = toggleBtnSelector[0],
+              toggleOn = toggleBtn.querySelectorAll('.autoplay-on')[0],
+              toggleOff = toggleBtn.querySelectorAll('.autoplay-off')[0];
+
+          if (activate) {
+            // toggle this on
+            toggleOn.className = 'autoplay-toggle autoplay-toggle-active autoplay-on';
+            toggleOff.className = 'autoplay-toggle autoplay-off';
+          } else {
+            // toggle this off
+            toggleOn.className = 'autoplay-toggle autoplay-on';
+            toggleOff.className = 'autoplay-toggle autoplay-toggle-active autoplay-off';
+          }
+        }
       }
     };
 
-    // initialize toggle either with storage value or player setting
-    var storageValue = storage.getItem(key),
-        turnOn = player.autoplay();
-    if (typeof(storageValue) === 'string') {
-      // we've put something in storage before, convert its value to boolean and use that
-      turnOn = storageValue === 'true';
+    var turnOn = !storage.getItem(key);
+    // change player behavior based on toggle
+    if (player.autoplay() && !turnOn) {
+      // this is autoplaying, stop it!
+      player.autoplay(turnOn);
+      player.pause();
     }
+    // initialize autoplay toggle
     autoplayToggle(turnOn);
 
+    // set up toggle click
     autoplayBtn.onclick = function () {
-      // do opposite of what's stored, at this point some value should be stored for autoplay
-      var toggle = !(storage.getItem(key) === 'true');
+      // check if key in storage and do the opposite of that to toggle
+      var toggle = !!storage.getItem(key);
       autoplayToggle(toggle);
     };
 
   };
 
+  // set this thing up as a vjs plugin
   videojs.plugin('autoplayToggle', autoplayToggle);
 
 })(window, document, videojs);
