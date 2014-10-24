@@ -3,21 +3,37 @@
 <head>
   <meta charset="utf-8" />
   <title>Video.js Autoplay Toggle</title>
-  <link href="http://vjs.zencdn.net/4.4.2/video-js.css" rel="stylesheet">
+  <link href="../bower_components/videojs/dist/video-js/video-js.css" rel="stylesheet">
+  <link href="../videojs.autoplay-toggle.css" rel="stylesheet">
 
   <!--[if IE]>
     <script src="https://getfirebug.com/releases/lite/1.4/firebug-lite.js"></script>
   <!--<![endif]-->
 
-  <!-- GENERATED LIST OF SOURCE FILES -->
-  <script src="http://vjs.zencdn.net/4.4.2/video.js"></script>
+  <script src="../bower_components/videojs/dist/video-js/video.js"></script>
   <script src="../videojs.autoplay-toggle.js"></script>
+
+  <style>
+    .description {
+      background-color:#eee;
+      border: 1px solid #777;
+      padding: 10px;
+      font-size: .8em;
+      line-height: 1.5em;
+      font-family: Verdana, sans-serif;
+    }
+  </style>
+
 </head>
 <body>
-  <p style="background-color:#eee; border: 1px solid #777; padding: 10px; font-size: .8em; line-height: 1.5em; font-family: Verdana, sans-serif;">Using local storage, volume changes persist after you leave the page or refresh it.</p>
+  <p class="description">
+    Autoplay toggle selection will be persisted in local storage or cookies.
+  </p>
 
   <video id="vid1" class="video-js vjs-default-skin" autoplay controls preload="auto"
       poster="http://video-js.zencoder.com/oceans-clip.png"
+      width="640"
+      height="360"
       data-setup='{}'>
     <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
     <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
