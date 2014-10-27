@@ -1,6 +1,6 @@
 {
     "name": "videojs-autoplay-toggle",
-    "version": "0.0.1",
+    "version": "1.0.1",
     "homepage": "https://github.com/theonion/videojs-autoplay-toggle",
     "authors": [
         "Andrew Kos <akos@theonion.com>"
