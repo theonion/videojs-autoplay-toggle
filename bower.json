@@ -10,7 +10,7 @@
     "keywords": [
         "video",
         "videojs",
-        "volume"
+        "autoplay"
     ],
     "license": "MIT",
     "ignore": [
