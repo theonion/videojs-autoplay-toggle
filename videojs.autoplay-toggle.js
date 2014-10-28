@@ -171,7 +171,7 @@
 
     var turnOn = !storage.getItem(key);
     // change player behavior based on toggle
-    if (!player.isPaused() && !turnOn) {
+    if (!player.paused() && !turnOn) {
       // this is autoplaying, stop it!
       player.pause();
     }
