@@ -175,8 +175,8 @@
       // this could be autoplaying, make sure to stop it and ensure player's autoplay is false
       player.autoplay(false);
       player.pause();
-    } else if (player.autoplay() && player.paused() && turnOn) {
-      // this is not autoplaying, but we want it to, so start playing
+    } else if (player.autoplay() && turnOn) {
+      // we want this to autoplay
       player.play();
     }
 
