@@ -190,6 +190,9 @@
       autoplayToggleButton(toggle);
     };
 
+    // return player to allow this plugin to be chained
+    return player;
+
   };
 
   // set this thing up as a vjs plugin
