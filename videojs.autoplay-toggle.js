@@ -140,7 +140,7 @@
     player.controlBar.el().appendChild(autoplayBtn);
 
     // retrieve autoplay from storage and highlight the correct toggle option in *all* video players
-    var autoplayToggle = function (activate) {
+    var autoplayToggleButton = function (activate) {
 
       // set cookie once
       activate ? storage.removeItem(key) : storage.setItem(key, 'no');
@@ -172,18 +172,22 @@
     var turnOn = !storage.getItem(key);
     // change player behavior based on toggle
     if (player.autoplay() && !turnOn) {
-      // this is autoplaying, stop it!
-      player.autoplay(turnOn);
+      // this could be autoplaying, make sure to stop it and ensure player's autoplay is false
+      player.autoplay(false);
       player.pause();
+    } else if (player.autoplay() && player.paused() && turnOn) {
+      // this is not autoplaying, but we want it to, so start playing
+      player.play();
     }
+
     // initialize autoplay toggle
-    autoplayToggle(turnOn);
+    autoplayToggleButton(turnOn);
 
     // set up toggle click
     autoplayBtn.onclick = function () {
       // check if key in storage and do the opposite of that to toggle
       var toggle = !!storage.getItem(key);
-      autoplayToggle(toggle);
+      autoplayToggleButton(toggle);
     };
 
   };
