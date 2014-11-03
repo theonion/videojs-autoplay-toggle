@@ -36,12 +36,19 @@ it gets sent into player initialization, preventing any false ```play``` events.
 
 An example of this usage is as follows:
 ```js
+// retrieve initial autoplay value to setup player with
 var autoplayToggleNamespace = 'videojs-plugin-integration';
 var autoplayFromStorage = videojs.autoplaySettingFromStorage({
   namespace: autoplayToggleNamespace
 });
 
+// initialize video
 var vid1 = videojs('vid1', {autoplay: autoplayFromStorage});
 
-// setup other plugins here, don't bother setting up autoplayToggle plugin
+// setup autoplay toggle plugin
+vid1.autoplayToggle({
+  namespace: autoplayToggleNamespace
+});
+
+// setup other plugins here
 ```
