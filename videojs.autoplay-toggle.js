@@ -198,4 +198,14 @@
   // set this thing up as a vjs plugin
   videojs.plugin('autoplayToggle', autoplayToggle);
 
+  // alternative function for retrieving autoplay value from storage for situations where other plugins
+  //  are interfering with this plugin
+  videojs.autoplaySettingFromStorage = function (options) {
+    var settings = extend({}, defaults, options || {}),
+        key = settings.namespace + '-autoplay';
+
+    // negate what's in storage since only "don't autoplay" is stored
+    return !storage.getItem(key);
+  };
+
 })(window, document, videojs);
