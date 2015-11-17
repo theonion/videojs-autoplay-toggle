@@ -136,7 +136,7 @@
             + '&nbsp;/&nbsp;'
             + '<span class="autoplay-toggle autoplay-off">Off</span>'
         + '</span>'
-      + '</div>';
+      '</div>';
     player.controlBar.el().appendChild(autoplayBtn);
 
     // retrieve autoplay from storage and highlight the correct toggle option in *all* video players
